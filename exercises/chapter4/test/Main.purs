@@ -7,6 +7,7 @@ import Data.Array (sort)
 import Data.Foldable (sequence_)
 import Data.Maybe (Maybe(..))
 import Data.Path (Path(..), filename, root)
+import Data.PriorityQ
 import Data.Tuple.Nested ((/\))
 import Effect (Effect)
 import Test.Unit (TestSuite, suite, test)
@@ -17,31 +18,36 @@ import Test.Unit.Main (runTest)
 main :: Effect Unit
 main =
   runTest do
-    runChapterExamples
-    {-  Move this block comment starting point to enable more tests
+--    runChapterExamples
     suite "Exercise Group - Recursion" do
       suite "Exercise - isEven" do
         test "0 is even" do
           Assert.equal true
             $ isEven 0
+
         test "1 is odd" do
           Assert.equal false
             $ isEven 1
+
         test "20 is even" do
           Assert.equal true
             $ isEven 20
+
         test "19 is odd" do
           Assert.equal false
             $ isEven 19
+
         test "-1 is odd" do
           Assert.equal false
             $ isEven (-1)
+
         test "-20 is even" do
           Assert.equal true
             $ isEven (-20)
         test "-19 is odd" do
           Assert.equal false
             $ isEven (-19)
+
       suite "Exercise - countEven" do
         test "[] has none" do
           Assert.equal 0
@@ -55,6 +61,7 @@ main =
         test "[0, 1, 19, 20] has 2" do
           Assert.equal 2
             $ countEven [ 0, 1, 19, 20 ]
+
     suite "Exercise Group - Maps, Infix Operators, and Filtering" do
       suite "Exercise - squared" do
         test "Do nothing with empty array" do
@@ -63,6 +70,7 @@ main =
         test "Calculate squares" do
           Assert.equal [ 0.0, 1.0, 4.0, 9.0, 10000.0 ]
             $ squared [ 0.0, 1.0, 2.0, 3.0, 100.0 ]
+
       suite "Exercise - keepNonNegative" do
         test "Do nothing with empty array" do
           Assert.equal []
@@ -70,6 +78,7 @@ main =
         test "Filter negative numbers" do
           Assert.equal [ 0.0, 2.0, 3.0 ]
             $ keepNonNegative [ -1.5, -1.0, 0.0, -0.1, 2.0, 3.0, -4.0 ]
+
       suite "Exercise - <$?> infix operator for filter" do
         test "Define <$?> operator for filter" do
           Assert.equal [ 1, 1 ]
@@ -78,6 +87,12 @@ main =
         test "keepNonNegativeRewrite " do
           Assert.equal [ 0.0, 2.0, 3.0 ]
             $ keepNonNegativeRewrite [ -1.5, -1.0, 0.0, -0.1, 2.0, 3.0, -4.0 ]
+
+      suite "isPrime" do
+        test "primality test" do
+          Assert.equal [true,false,true,true,false] 
+            $ map isPrime [2,4,3,5,10]
+{-
     suite "Exercise Group - Flattening, Comprehensions, Do Notation, and Guards" do
       test "Exercise - isPrime" do
         assertFalse "0 is not prime"
@@ -200,7 +215,7 @@ main =
         testls "works for a directory with one file" ["/etc/hosts"] oneFileDir
         testls "works for an empty directory" [] emptyDir
 
--}
+
 runChapterExamples :: TestSuite
 runChapterExamples =
   suite "Chapter Examples" do
@@ -263,3 +278,4 @@ allFileAndDirectoryNames =
   , "/home/user/code/haskell/"
   , "/home/user/code/haskell/test.hs"
   ]
+-}
